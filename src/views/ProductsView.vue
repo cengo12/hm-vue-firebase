@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-data-table :items="products" :headers="headers">
+    <v-data-table :items="products" :headers="headers" :search="search" align-center>
 
       <template v-slot:top>
-        <div class="d-flex align-center">
-          <v-text-field v-model="search" append-icon="mdi-magnify" label="Arama" single-line hide-details />
+        <div class="d-flex align-center pa-4">
+          <v-text-field v-model="search" variant="solo" append-icon="mdi-magnify" label="Arama" single-line hide-details />
           <v-btn rounded="xs" class="mx-2 white--text" prepend-icon="mdi-plus" text="Ekle" @click="addNew" />
         </div>
       </template>
@@ -21,33 +21,33 @@
       </template>
 
       <template v-slot:item.product_name="{ item }">
-        <v-text-field v-model="editedItem.product_name" :hide-details="true" dense single-line :autofocus="true"
-          v-if="item.id === editedItem.id" />
+        <v-text-field v-model="editedItem.product_name" variant="outlined" :hide-details="true" density="compact" single-line
+          :autofocus="true" v-if="item.id === editedItem.id" />
         <span v-else> {{ item.product_name }} </span>
       </template>
 
       <template v-slot:item.product_stock="{ item }">
-        <v-text-field v-model="editedItem.product_stock" :hide-details="true" dense single-line
+        <v-text-field v-model="editedItem.product_stock" variant="outlined" :hide-details="true" density="compact" single-line
           v-if="item.id === editedItem.id" />
         <span v-else> {{ item.product_stock }} </span>
       </template>
 
       <template v-slot:item.product_unit="{ item }">
-        <v-text-field v-model="editedItem.product_unit" :hide-details="true" dense single-line
+        <v-text-field v-model="editedItem.product_unit" variant="outlined" :hide-details="true" density="compact" single-line
           v-if="item.id === editedItem.id" />
         <span v-else> {{ item.product_unit }} </span>
       </template>
 
       <template v-slot:item.product_cost="{ item }">
-        <v-text-field v-model="editedItem.product_cost" :hide-details="true" dense single-line
+        <v-text-field v-model="editedItem.product_cost" variant="outlined" :hide-details="true" density="compact" single-line
           v-if="item.id === editedItem.id" />
         <span v-else> {{ item.product_cost }} </span>
       </template>
 
       <template v-slot:item.product_description="{ item }">
-        <v-text-field v-model="editedItem.product_description" :hide-details="true" dense single-line
+        <v-text-field v-model="editedItem.product_description" variant="outlined" :hide-details="true" density="compact" single-line 
           v-if="item.id === editedItem.id" />
-        <span v-else> {{ item.product_description }} </span>
+        <span v-else > {{ item.product_description }} </span>
       </template>
 
     </v-data-table>
@@ -151,5 +151,15 @@ const addNew = async () => {
 }
 
 
-
 </script>
+
+<style scoped>
+input.v-field__input {
+  padding: 4px;
+}
+
+td > span {
+  padding: 4px;
+}
+
+</style>
