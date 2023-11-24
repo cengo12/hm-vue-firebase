@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-data-table :items="products" :headers="headers" :search="search" align-center>
+  <div style="width: 100%;">
+    <v-data-table :items="products" :headers="headers" :search="search" align-center style="height: 100%;">
 
       <template v-slot:top>
         <div class="d-flex align-center pa-4">
@@ -47,7 +47,7 @@
       <template v-slot:item.product_description="{ item }">
         <v-text-field v-model="editedItem.product_description" variant="outlined" :hide-details="true" density="compact" single-line 
           v-if="item.id === editedItem.id" />
-        <span v-else > {{ item.product_description }} </span>
+        <span style="word-break: break-all;" v-else > {{ item.product_description }} </span>
       </template>
 
     </v-data-table>
@@ -86,27 +86,33 @@ const products = useCollection(productsRef);
 const headers = [
   {
     title: 'Ürün Adı',
-    value: 'product_name'
+    value: 'product_name',
+    width: '25%',
   },
   {
     title: 'Stok',
-    value: 'product_stock'
+    value: 'product_stock',
+    width: '15%',
   },
   {
     title: 'Birim',
-    value: 'product_unit'
+    value: 'product_unit',
+    width: '10%',
   },
   {
     title: 'Fiyat',
-    value: 'product_cost'
+    value: 'product_cost',
+    width: '15%',
   },
   {
     title: 'Açıklama',
-    value: 'product_description'
+    value: 'product_description',
+    width: '20%',
   },
   {
     title: 'İşlemler',
-    value: 'actions'
+    value: 'actions',
+    width: '15%',
   },
 ]
 
@@ -154,7 +160,7 @@ const addNew = async () => {
 </script>
 
 <style scoped>
-input.v-field__input {
+.v-text-field :deep(input) {
   padding: 4px;
 }
 
