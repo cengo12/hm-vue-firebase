@@ -53,13 +53,13 @@ const toggleExpanded2 = () => {
 
       <div>
         <RouterLink to="/urunler" v-slot="{ href, route, navigate }">
-          <v-btn :href="href" @click="navigate" class='router-button' >
+          <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
             Ürünler
           </v-btn>
         </RouterLink>
 
         <RouterLink to="/receteler" v-slot="{ href, route, navigate }">
-          <v-btn :href="href" @click="navigate" class='router-button' >
+          <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
             Reçeteler
           </v-btn>
         </RouterLink>
@@ -79,7 +79,7 @@ main {
 
 .router-button {
   width: 100%;
-  height: 200px;
+  height: 40px;
 }
 
 .mycontainer {
