@@ -18,7 +18,7 @@ const quantity = ref(1);
 
 <template>
     <div>
-        <v-select v-model="selectedRecipe" :items="recipes" return-object item-title="recipe_name" label="Reçete"
+        <v-select v-model="selectedRecipe" :items="recipes" return-object item-title="recipe_name" item-value="id" label="Reçete"
             variant="outlined" clearable></v-select>
     </div>
 

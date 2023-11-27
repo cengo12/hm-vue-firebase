@@ -5,7 +5,7 @@
       <v-col cols="6">
         <div>
 
-          <v-select v-model="selectedProduct" :items="products" return-object item-title="product_name" label="Ürün"
+          <v-select v-model="selectedProduct" :items="products" return-object item-title="product_name" item-value="id" label="Ürün"
             variant="outlined" clearable></v-select>
         </div>
       </v-col>

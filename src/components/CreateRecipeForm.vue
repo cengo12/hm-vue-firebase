@@ -3,41 +3,52 @@ import { productsRef } from "@/firebase";
 import { useCollection } from "vuefire";
 import { ref } from 'vue';
 import { doc, setDoc } from "firebase/firestore";
-import { recipeIngredientsRef, recipesRef } from "../firebase";
+import { recipeIngredientsRef, recipesRef, ingredientRef } from "../firebase";
 
 
 const products = useCollection(productsRef)
 
-
-const selectedProduct = ref();
-const quantity = ref();
 const recipeName = ref();
 const numberOfIngredients = ref(1)
 
-const newRecipe = ref({
-    recipe_name: "Yeni Reçete",
-})
-const ingredients = ref([])
+
+const ingredients = ref(Array.from({ length: numberOfIngredients.value }, () => ({ product: null, amount: null })))
+
 
 const createRecipe = async () => {
-    // Add a new document with a generated id
     const newRecipeRef = doc(recipesRef);
+    await setDoc(newRecipeRef, {recipe_name: recipeName.value} );
 
-    // later...
-    await setDoc(newRecipeRef, newRecipe.value);
-    await setDoc(recipeIngredientsRef(newRecipeRef.id), {
-        recipe_id: newRecipeRef.id,
-        ingredient: "/urunler/"+selectedProduct.value.id,
-        amount: quantity.value
+    ingredients.value.forEach(async ingredient => {
+        var myIngredientRef = ingredientRef(ingredient.product.id);
+        console.log(ingredient.product.id)
+
+        const newRecipeIngredientsRef = doc(recipeIngredientsRef(newRecipeRef.id))
+        await setDoc(newRecipeIngredientsRef, {
+            amount: parseInt(ingredient.amount),
+            ingredient: myIngredientRef,
+        });
     });
+
 }
 
+
+
 const selectProduct = () => {
-    console.log(selectedProduct.value.id);
-    ingredients.value.push({
-        ingredient: selectedProduct.id,
-        amount: quantity.value
-    })
+    //console.log()
+
+}
+
+const addIngredient = () => {
+    numberOfIngredients.value++;
+    ingredients.value.push({ product: null, amount: null });
+}
+
+const removeIngredient = () => {
+    if (numberOfIngredients.value > 0) {
+        numberOfIngredients.value--;
+        ingredients.value.pop();
+    }
 }
 
 </script>
@@ -46,14 +57,16 @@ const selectProduct = () => {
     <div>
         <v-text-field v-model="recipeName" label="Reçete Adı" variant="outlined" clearable></v-text-field>
         <ul>
-            <li v-for="i in numberOfIngredients" :key="i">
-                <v-select v-model="selectedProduct" :items="products" :key="products.id" @update:modelValue="selectProduct" return-object item-title="product_name" label="Ürün"
+            <li v-for="(ingredient, i) in ingredients" :key="i">
+                <v-select v-model="ingredient.product" :items="products" :key="products.id"
+                    @update:modelValue="selectProduct" return-object item-title="product_name" item-value="id" label="Ürün"
                     variant="outlined" clearable></v-select>
-                <v-text-field v-model="quantity" label="Miktar" variant="outlined" clearable></v-text-field>
+
+                <v-text-field v-model="ingredient.amount" label="Miktar" variant="outlined" clearable></v-text-field>
             </li>
         </ul>
-        <v-btn @click="numberOfIngredients++">+</v-btn>
-        <v-btn @click="numberOfIngredients--">-</v-btn>
+        <v-btn @click="addIngredient">+</v-btn>
+        <v-btn @click="removeIngredient">-</v-btn>
         <v-btn @click="createRecipe">Reçete Oluştur</v-btn>
     </div>
 </template>

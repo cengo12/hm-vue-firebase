@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, collection } from 'firebase/firestore'
+import { getFirestore, collection, doc } from 'firebase/firestore'
 
 export const firebaseApp = initializeApp({
     apiKey: import.meta.env.VITE_API_KEY,
@@ -19,6 +19,7 @@ export const productsRef = collection(db, 'urunler')
 export const recipesRef = collection(db, 'receteler')
 
 export const recipeIngredientsRef = (recipeId) =>  collection(db, 'receteler', recipeId, 'recete_urunler');
+export const ingredientRef = (ingredientId) => doc(db, 'urunler' , ingredientId);
 
 
 
