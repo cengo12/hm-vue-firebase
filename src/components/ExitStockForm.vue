@@ -8,7 +8,7 @@ import ExitStockButton from "./ExitStockButton.vue";
 
 const recipes = useCollection(recipesRef)
 const selectedRecipe = ref();
-const quantity = ref();
+const quantity = ref(1);
 
 
 
@@ -24,7 +24,7 @@ const quantity = ref();
 
     <template v-if="selectedRecipe && 'id' in selectedRecipe">
         <RecipeCard :key="selectedRecipe.id" :recipeId="selectedRecipe.id" :recipeName="selectedRecipe.recipe_name" />
-        <v-text-field v-model="quantity" label="Miktar" variant="outlined" clearable></v-text-field>
+        <v-text-field type="number" v-model.number="quantity" label="Miktar" variant="outlined" clearable></v-text-field>
         <ExitStockButton :key="selectedRecipe.id" :recipeId="selectedRecipe.id" :quantity="quantity" />
     </template>
 

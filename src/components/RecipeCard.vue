@@ -12,7 +12,7 @@ const recipe = useCollection(collection(db, 'receteler', props.recipeId, 'recete
 const totalCost = computed(() => {
     let cost = 0;
     if (recipe.value) {
-        for(let ingredient of recipe.value) {
+        for (let ingredient of recipe.value) {
             cost += ingredient.ingredient.product_cost * ingredient.amount;
         }
     }
@@ -27,10 +27,11 @@ const totalCost = computed(() => {
             <v-card-title>{{ recipeName }}</v-card-title>
         </v-card-item>
         <v-card-text>
-            <template v-for="ingredient in recipe" :key="ingredient.id" >
+            <template v-for="ingredient in recipe" :key="ingredient.id">
                 <ul>
-                    <li>{{ 'urun adi: ' + ingredient.ingredient.product_name  }}</li>
+                    <li>{{ 'urun adi: ' + ingredient.ingredient.product_name }}</li>
                     <li>{{ 'urun miktari: ' + ingredient.amount }}</li>
+                    <li>{{ 'urun birim maliyeti: ' + ingredient.ingredient.product_cost }}</li>
                     <li>{{ 'urun maliyeti: ' + ingredient.ingredient.product_cost * ingredient.amount }}</li>
                 </ul>
                 <br>
@@ -39,7 +40,7 @@ const totalCost = computed(() => {
         <div>
             Toplam Reçete Maliyeti: {{ totalCost }}
         </div>
-        
+
     </v-card>
     <br>
 </template>
