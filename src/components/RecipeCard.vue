@@ -1,13 +1,11 @@
 <script setup>
-import { useCollection, useFirestore } from 'vuefire';
-import { collection } from 'firebase/firestore';
+import { useCollection } from 'vuefire';
 import { computed } from 'vue';
+import { recipeIngredientsRef } from '../firebase';
 
 
-const props = defineProps(['recipeId', 'recipeName'])
-const db = useFirestore();
-
-const recipe = useCollection(collection(db, 'receteler', props.recipeId, 'recete_urunler'));
+const props = defineProps(['recipeId', 'recipeName']);
+const recipe = useCollection(recipeIngredientsRef(props.recipeId));
 
 const totalCost = computed(() => {
     let cost = 0;

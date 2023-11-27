@@ -2,6 +2,7 @@
 import { recipesRef } from '@/firebase'
 import { useCollection } from 'vuefire';
 import RecipeCard from '@/components/RecipeCard.vue';
+import CreateRecipeForm from '../components/CreateRecipeForm.vue';
 
 
 const recipes = useCollection(recipesRef);
@@ -21,6 +22,7 @@ const logValue = () => {
   <div>
     <h1>Reçeteler</h1>
     <v-btn @click="logValue"></v-btn>
+    <CreateRecipeForm />
 
     <div v-for="recipe in recipes" :key="recipe.id">
       <RecipeCard :recipeId="recipe.id" :recipeName="recipe.recipe_name" />

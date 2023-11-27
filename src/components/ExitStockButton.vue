@@ -1,9 +1,9 @@
 <script setup>
-import { useFirestore } from 'vuefire';
-import { collection, doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { useCollection } from "vuefire";
 import { productsRef } from "@/firebase";
 import { ref } from 'vue';
+import {recipeIngredientsRef} from "@/firebase";
 
 
 const props = defineProps({
@@ -12,9 +12,9 @@ const props = defineProps({
         type: Number,
         default: 1
     },
-})
-const db = useFirestore();
-const recipe = useCollection(collection(db, 'receteler', props.recipeId, 'recete_urunler'));
+});
+
+const recipe = useCollection(recipeIngredientsRef(props.recipeId));
 
 const stocks = ref([]);
 
@@ -62,6 +62,6 @@ const updateStock = async () => {
     <v-btn @click="updateStock">Stok Çıkışı Yap</v-btn>
     <div v-for="stock in stocks">
         <p>{{ stock.ingredient_name }} için stok güncellendi. Eski stok: {{ stock.old_stock }} Yeni stok: {{ stock.new_stock
-                    }}</p>
+        }}</p>
     </div>
 </template>

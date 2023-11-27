@@ -18,5 +18,8 @@ const db = getFirestore(firebaseApp)
 export const productsRef = collection(db, 'urunler')
 export const recipesRef = collection(db, 'receteler')
 
+export const recipeIngredientsRef = (recipeId) =>  collection(db, 'receteler', recipeId, 'recete_urunler');
+
+
 
 
