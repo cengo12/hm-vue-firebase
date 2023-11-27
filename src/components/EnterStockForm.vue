@@ -13,7 +13,7 @@
         <v-text-field v-model="quantity" label="Miktar" variant="outlined" clearable></v-text-field>
       </v-col>
       <v-col cols="4" class="pb-8">
-        <v-btn @click="showSelected" rounded="xs" class="white--text" style="height: 100%;" prepend-icon="mdi-plus"
+        <v-btn @click="addSelected" rounded="xs" class="white--text" style="height: 100%;" prepend-icon="mdi-plus"
           text="Ekle" />
       </v-col>
     </v-row>
@@ -34,12 +34,14 @@ const products = useCollection(productsRef)
 const selectedProduct = ref();
 const quantity = ref();
 
-const showSelected = async () => {
+const addSelected = async () => {
 
   const editedItemRef = doc(productsRef, selectedProduct.value.id);
   console.log("old stock: " + selectedProduct.value.product_stock);
+
   selectedProduct.value.product_stock = parseInt(selectedProduct.value.product_stock) + parseInt(quantity.value);
   console.log("new stock: " + selectedProduct.value.product_stock);
+
   await updateDoc(editedItemRef, selectedProduct.value).then(() => {
     console.log("Document successfully updated!");
     console.log(selectedProduct.value);

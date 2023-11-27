@@ -1,5 +1,7 @@
 <script setup>
-import EnterStockForm from '../components/EnterStockForm.vue';
+import EnterStockForm from '@/components/EnterStockForm.vue';
+import ExitStockForm from '@/components/ExitStockForm.vue';
+
 import { ref } from 'vue';
 
 let isExpanded = ref(false);
@@ -45,7 +47,7 @@ const toggleExpanded2 = () => {
           </v-expansion-panel-title>
           
           <v-expansion-panel-text>
-
+            <ExitStockForm />
           </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>

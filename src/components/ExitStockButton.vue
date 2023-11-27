@@ -1,0 +1,53 @@
+<script setup>
+import { defineProps } from 'vue'
+import { useFirestore } from 'vuefire';
+import { collection, doc, updateDoc } from 'firebase/firestore';
+import { useCollection } from "vuefire";
+import { productsRef } from "@/firebase";
+import { ref } from 'vue';
+
+
+const props = defineProps(['recipeId', 'quantity'])
+const db = useFirestore();
+const recipe = useCollection(collection(db, 'receteler', props.recipeId, 'recete_urunler'));
+
+const stocks = ref([]);
+
+const updateStock = async () => {
+    console.log("updateStock function called");
+    console.log("QUANTITY: " + props.quantity);
+    stocks.value = [];
+    for(let ingredient of recipe.value) {
+        const editedItemRef = doc(productsRef, ingredient.ingredient.id);
+
+        console.log("ürün adı: " + ingredient.ingredient.product_name)
+        console.log("old stock: " + ingredient.ingredient.product_stock);
+        let oldStock = parseInt(ingredient.ingredient.product_stock);
+
+        ingredient.ingredient.product_stock = parseInt(ingredient.ingredient.product_stock) - (props.quantity ? props.quantity*parseInt(ingredient.amount) : 1);
+        console.log("new stock: " + ingredient.ingredient.product_stock);
+        let newStock = parseInt(ingredient.ingredient.product_stock);
+
+        await updateDoc(editedItemRef, ingredient.ingredient).then(() => {
+            console.log("Document successfully updated!");
+            console.log(ingredient.ingredient);
+            stocks.value.push({
+                ingredient_name: ingredient.ingredient.product_name,
+                old_stock: oldStock,
+                new_stock: newStock
+            });
+        }).catch((error) => {
+            console.error("Error updating document: ", error);
+        });
+    }
+}
+
+</script>
+
+<template>
+    <v-btn @click="updateStock" >Stok Çıkışı Yap</v-btn>
+    <div v-for="stock in stocks">
+        <p>{{ stock.ingredient_name }} için stok güncellendi. Eski stok: {{ stock.old_stock }} Yeni stok: {{ stock.new_stock }}</p>
+    </div>
+
+</template>
