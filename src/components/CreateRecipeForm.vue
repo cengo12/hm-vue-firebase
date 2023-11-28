@@ -1,4 +1,5 @@
 <script setup>
+
 import { productsRef } from "@/firebase";
 import { useCollection } from "vuefire";
 import { ref } from 'vue';
@@ -12,7 +13,7 @@ const recipeName = ref();
 const numberOfIngredients = ref(1)
 
 
-const ingredients = ref(Array.from({ length: numberOfIngredients.value }, () => ({ product: null, amount: null })))
+const ingredients = ref([])
 
 
 const createRecipe = async () => {
@@ -44,10 +45,10 @@ const addIngredient = () => {
     ingredients.value.push({ product: null, amount: null });
 }
 
-const removeIngredient = () => {
+const removeIngredient = (ingredient) => {
     if (numberOfIngredients.value > 0) {
         numberOfIngredients.value--;
-        ingredients.value.pop();
+        ingredients.value.splice(ingredients.value.indexOf(ingredient), 1);
     }
 }
 
@@ -56,19 +57,21 @@ const removeIngredient = () => {
 </script>
 
 <template>
-    <div>
+    <div style="border-style: solid;">
         <v-text-field v-model="recipeName" label="Reçete Adı" variant="outlined" clearable></v-text-field>
-        <ul>
-            <li v-for="(ingredient, i) in ingredients" :key="i">
+        <v-list>
+            <v-list-item v-for="(ingredient, i) in ingredients" :key="i">
                 <v-select v-model="ingredient.product" :items="products" :key="products.id"
                     @update:modelValue="selectProduct" return-object item-title="product_name" item-value="id" label="Ürün"
                     variant="outlined" clearable></v-select>
 
                 <v-text-field v-model="ingredient.amount" label="Miktar" variant="outlined" clearable></v-text-field>
-            </li>
-        </ul>
+                <v-btn @click="removeIngredient(ingredient)" :key="i">-</v-btn>
+            </v-list-item>
+        </v-list>
         <v-btn @click="addIngredient">+</v-btn>
-        <v-btn @click="removeIngredient">-</v-btn>
+        
         <v-btn @click="createRecipe">Reçete Oluştur</v-btn>
+
     </div>
 </template>

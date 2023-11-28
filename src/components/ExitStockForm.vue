@@ -1,4 +1,5 @@
 <script setup>
+
 import { recipesRef } from "@/firebase";
 import { useCollection } from "vuefire";
 import { ref } from 'vue';
@@ -28,4 +29,4 @@ const quantity = ref(1);
         <ExitStockButton :key="selectedRecipe.id" :recipeId="selectedRecipe.id" :quantity="quantity" />
     </template>
 
-</template>
+</template> 
