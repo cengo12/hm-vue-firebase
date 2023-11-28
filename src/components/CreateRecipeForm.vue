@@ -35,7 +35,7 @@ const createRecipe = async () => {
 
 
 const selectProduct = () => {
-    //console.log()
+    console.log(ingredients.value)
 
 }
 
@@ -50,6 +50,8 @@ const removeIngredient = () => {
         ingredients.value.pop();
     }
 }
+
+
 
 </script>
 
