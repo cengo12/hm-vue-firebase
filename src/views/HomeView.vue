@@ -20,55 +20,52 @@ const toggleExpanded2 = () => {
 
 
 <template>
-  <main>
-    <div class="mycontainer">
-      <h1>Has Mamul</h1>
+  <div class="mycontainer">
+
+    <v-expansion-panels :class="{ expanded: isExpanded }">
+      <v-expansion-panel>
+
+        <v-expansion-panel-title @click="toggleExpanded">
+          Stok Giriş
+        </v-expansion-panel-title>
+
+        <v-expansion-panel-text>
+          <EnterStockForm />
+        </v-expansion-panel-text>
+
+      </v-expansion-panel>
+    </v-expansion-panels>
+
+    <v-expansion-panels :class="{ expanded: isExpanded2 }">
+      <v-expansion-panel>
+
+        <v-expansion-panel-title @click="toggleExpanded2">
+          Stok Çıkış
+        </v-expansion-panel-title>
+
+        <v-expansion-panel-text>
+          <ExitStockForm />
+        </v-expansion-panel-text>
+
+      </v-expansion-panel>
+    </v-expansion-panels>
 
 
+    <div>
+      <RouterLink to="/urunler" v-slot="{ href, route, navigate }">
+        <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
+          Ürünler
+        </v-btn>
+      </RouterLink>
 
-      <v-expansion-panels :class="{ expanded: isExpanded }">
-
-        <v-expansion-panel>
-          <v-expansion-panel-title @click="toggleExpanded">
-            Stok Giriş
-          </v-expansion-panel-title>
-
-          <v-expansion-panel-text>
-            <EnterStockForm />
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-
-      </v-expansion-panels>
-
-      <v-expansion-panels :class="{ expanded: isExpanded2 }">
-        <v-expansion-panel >
-          <v-expansion-panel-title @click="toggleExpanded2">
-            Stok Çıkış
-          </v-expansion-panel-title>
-          
-          <v-expansion-panel-text>
-            <ExitStockForm />
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-      </v-expansion-panels>
-
-
-      <div>
-        <RouterLink to="/urunler" v-slot="{ href, route, navigate }">
-          <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
-            Ürünler
-          </v-btn>
-        </RouterLink>
-
-        <RouterLink to="/receteler" v-slot="{ href, route, navigate }">
-          <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
-            Reçeteler
-          </v-btn>
-        </RouterLink>
-      </div>
-
+      <RouterLink to="/receteler" v-slot="{ href, route, navigate }">
+        <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
+          Reçeteler
+        </v-btn>
+      </RouterLink>
     </div>
-  </main>
+
+  </div>
 </template>
 
 <style scoped>

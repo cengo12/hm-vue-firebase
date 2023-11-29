@@ -1,20 +1,30 @@
 <script setup>
+
 import { RouterView } from 'vue-router'
+import { ref } from 'vue'
+
+const drawer = ref(false)
 </script>
 
 <template>
-  <v-app :full-height=true >
-    <div class="container">
+  <v-app >
+
+    <v-navigation-drawer v-model="drawer" >
+    </v-navigation-drawer>
+
+    <v-app-bar >
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>HAS MAMUL</v-toolbar-title>
+    </v-app-bar>
+
+    <v-main>
       <RouterView />
-    </div>
+    </v-main>
+
   </v-app>
 </template>
 
 <style scoped>
-.container {
-  background-color: #f5f5f5;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-}
+
 </style>
