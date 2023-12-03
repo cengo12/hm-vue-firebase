@@ -7,12 +7,12 @@ const drawer = ref(false)
 </script>
 
 <template>
-  <v-app >
+  <v-app>
 
-    <v-navigation-drawer v-model="drawer" >
+    <v-navigation-drawer v-model="drawer">
     </v-navigation-drawer>
 
-    <v-app-bar >
+    <v-app-bar>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>HAS MAMUL</v-toolbar-title>
@@ -25,6 +25,4 @@ const drawer = ref(false)
   </v-app>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

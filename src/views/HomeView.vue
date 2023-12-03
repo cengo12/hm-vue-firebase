@@ -1,82 +1,58 @@
 <script setup>
+
 import EnterStockForm from '@/components/EnterStockForm.vue';
 import ExitStockForm from '@/components/ExitStockForm.vue';
-
-import { ref } from 'vue';
-
-let isExpanded = ref(false);
-
-const toggleExpanded = () => {
-  isExpanded.value = !isExpanded.value;
-};
-
-let isExpanded2 = ref(false);
-
-const toggleExpanded2 = () => {
-  isExpanded2.value = !isExpanded2.value;
-};
+import ExpansionPanel from '../components/ExpansionPanel.vue';
 
 </script>
 
 
 <template>
-  <div class="mycontainer">
+  <v-container class="h-auto">
+    <v-row align="start">
+      <v-col cols="12" xs="12" sm="12" md="6" lg="5" xl="5" xxl="5">
+        <ExpansionPanel>
+          <template #title>
+            Stok Giriş
+          </template>
+          <template #content>
+            <EnterStockForm />
+          </template>
+        </ExpansionPanel>
+      </v-col>
 
-    <v-expansion-panels :class="{ expanded: isExpanded }">
-      <v-expansion-panel>
+      <v-col cols="12" xs="12" sm="12" md="6" lg="5" xl="5" xxl="5">
+        <ExpansionPanel>
+          <template #title>
+            Stok Çıkış
+          </template>
+          <template #content>
+            <ExitStockForm />
+          </template>
+        </ExpansionPanel>
+      </v-col>
 
-        <v-expansion-panel-title @click="toggleExpanded">
-          Stok Giriş
-        </v-expansion-panel-title>
+      <v-col cols="12" xs="12" sm="12" md="12" lg="2" xl="2" xxl="2">
+        <div>
+          <RouterLink to="/urunler" v-slot="{ href, navigate }">
+            <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
+              Ürünler
+            </v-btn>
+          </RouterLink>
 
-        <v-expansion-panel-text>
-          <EnterStockForm />
-        </v-expansion-panel-text>
-
-      </v-expansion-panel>
-    </v-expansion-panels>
-
-    <v-expansion-panels :class="{ expanded: isExpanded2 }">
-      <v-expansion-panel>
-
-        <v-expansion-panel-title @click="toggleExpanded2">
-          Stok Çıkış
-        </v-expansion-panel-title>
-
-        <v-expansion-panel-text>
-          <ExitStockForm />
-        </v-expansion-panel-text>
-
-      </v-expansion-panel>
-    </v-expansion-panels>
-
-
-    <div>
-      <RouterLink to="/urunler" v-slot="{ href, route, navigate }">
-        <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
-          Ürünler
-        </v-btn>
-      </RouterLink>
-
-      <RouterLink to="/receteler" v-slot="{ href, route, navigate }">
-        <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
-          Reçeteler
-        </v-btn>
-      </RouterLink>
-    </div>
-
-  </div>
+          <RouterLink to="/receteler" v-slot="{ href, navigate }">
+            <v-btn :href="href" @click="navigate" class='router-button' rounded="xs">
+              Reçeteler
+            </v-btn>
+          </RouterLink>
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>
-main {
-  flex-grow: 1;
-  min-width: 24em;
-  max-width: 800px;
-  padding: 10px;
-}
-
-.router-button {
+/* .router-button {
   width: 100%;
   height: 40px;
 }
@@ -96,14 +72,5 @@ main {
 .v-expansion-panel,
 .v-btn {
   margin-bottom: 1rem;
-}
-
-.expanded,
-.v-expansion-panel--active {
-  flex-grow: 1;
-}
-
-.v-expansion-panels {
-  transition: 0.5s;
-}
+} */
 </style>
