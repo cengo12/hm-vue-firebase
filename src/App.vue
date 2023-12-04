@@ -2,14 +2,17 @@
 
 import { RouterView } from 'vue-router'
 import { ref } from 'vue'
+import NavigationDrawer from './components/NavigationDrawer.vue'
 
-const drawer = ref(false)
+const drawer = ref(false);
+
 </script>
 
 <template>
   <v-app>
 
     <v-navigation-drawer v-model="drawer">
+      <NavigationDrawer />
     </v-navigation-drawer>
 
     <v-app-bar>
