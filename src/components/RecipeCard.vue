@@ -1,9 +1,9 @@
 <script setup>
 import { useCollection } from 'vuefire';
 import { computed } from 'vue';
-import { recipeIngredientsRef } from '../firebase';
+import { recipeIngredientsRef, recipesRef } from '../firebase';
 import  IngredientCard  from './IngredientCard.vue';
-
+import { doc, updateDoc, addDoc, deleteDoc } from 'firebase/firestore';
 
 const props = defineProps(['recipeId', 'recipeName']);
 const recipe = useCollection(recipeIngredientsRef(props.recipeId));
@@ -18,23 +18,31 @@ const totalCost = computed(() => {
     return cost;
 });
 
+const deleteRecipe = async () => {
+    if (confirm('Reçeteyi Silmek İstediğinize Emin Misiniz')) {
+    await deleteDoc(doc(recipesRef, props.recipeId)).then(() => {
+      console.log("Document successfully deleted!");
+    }).catch((error) => {
+      console.error("Error removing document: ", error);
+    });
+
+  }
+}
+
 </script>
 
 <template>
     <v-card hover >
-        <v-card-item>
+        <v-card-item append-icon="mdi-delete">
             <v-card-title>{{ recipeName }}</v-card-title>
+            <template v-slot:append >
+                <v-btn icon @click="deleteRecipe">
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </template>
         </v-card-item>
         <v-card-text>
             <template v-for="ingredient in recipe" :key="ingredient.id">
-                <!-- 
-                <v-list lines="one" density="compact">
-                    <v-list-item>{{ 'Ürün adı: ' + ingredient.ingredient.product_name }}</v-list-item>
-                    <v-list-item>{{ 'Ürün miktari: ' + ingredient.amount }}</v-list-item>
-                    <v-list-item>{{ 'Ürün birim maliyeti: ' + ingredient.ingredient.product_cost }}</v-list-item>
-                    <v-list-item>{{ 'Ürün maliyeti: ' + ingredient.ingredient.product_cost * ingredient.amount }}</v-list-item>
-                </v-list> 
-                -->
                 <IngredientCard 
                 :ingredientName="ingredient.ingredient.product_name" 
                 :ingredientAmount="ingredient.amount" 

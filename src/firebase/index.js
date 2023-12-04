@@ -20,6 +20,7 @@ export const recipesRef = collection(db, 'receteler')
 
 export const recipeIngredientsRef = (recipeId) =>  collection(db, 'receteler', recipeId, 'recete_urunler');
 export const ingredientRef = (ingredientId) => doc(db, 'urunler' , ingredientId);
+export const recipeRef = (recipeId) => doc(db, 'receteler', recipeId);
 
 
 
